@@ -2,23 +2,18 @@ import 'package:flutter/material.dart';
 
 import 'welcome_screen.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(const WorkLinkApp());
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class WorkLinkApp extends StatelessWidget {
+  const WorkLinkApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Namma Health',
+      title: 'WorkLink',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF1B7A6E),
-          brightness: Brightness.light,
-        ),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF176B55)),
         useMaterial3: true,
       ),
       home: const WelcomeScreen(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'services/api_service.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -9,11 +10,9 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  final TextEditingController _messageController =
-      TextEditingController();
+  final TextEditingController _messageController = TextEditingController();
 
-  final ScrollController _scrollController =
-      ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   final List<Map<String, String>> _messages = [];
 
@@ -29,10 +28,7 @@ class _ChatScreenState extends State<ChatScreen> {
     }
 
     setState(() {
-      _messages.add({
-        'sender': 'user',
-        'message': message,
-      });
+      _messages.add({'sender': 'user', 'message': message});
 
       _messageController.clear();
       _isLoading = true;
@@ -52,10 +48,7 @@ class _ChatScreenState extends State<ChatScreen> {
       setState(() {
         _sessionId = result.sessionId;
 
-        _messages.add({
-          'sender': 'ai',
-          'message': result.message,
-        });
+        _messages.add({'sender': 'ai', 'message': result.message});
       });
 
       _scrollToBottom();
@@ -63,11 +56,7 @@ class _ChatScreenState extends State<ChatScreen> {
       if (!mounted) return;
 
       setState(() {
-        _messages.add({
-          'sender': 'ai',
-          'message':
-              'Connection error:\n\n$e',
-        });
+        _messages.add({'sender': 'ai', 'message': 'Connection error:\n\n$e'});
       });
 
       _scrollToBottom();
@@ -110,43 +99,30 @@ class _ChatScreenState extends State<ChatScreen> {
         foregroundColor: Colors.white,
         title: const Text(
           'Namma Health',
-          style: TextStyle(
-            fontWeight: FontWeight.w800,
-          ),
+          style: TextStyle(fontWeight: FontWeight.w800),
         ),
         centerTitle: true,
       ),
       body: Column(
         children: [
           Expanded(
-            child: _messages.isEmpty
-                ? _buildWelcome()
-                : _buildMessages(),
+            child: _messages.isEmpty ? _buildWelcome() : _buildMessages(),
           ),
 
           if (_isLoading)
             const Padding(
-              padding: EdgeInsets.only(
-                left: 16,
-                right: 16,
-                bottom: 8,
-              ),
+              padding: EdgeInsets.only(left: 16, right: 16, bottom: 8),
               child: Row(
                 children: [
                   SizedBox(
                     width: 20,
                     height: 20,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                    ),
+                    child: CircularProgressIndicator(strokeWidth: 2),
                   ),
                   SizedBox(width: 10),
                   Text(
                     'Namma Health is thinking...',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                 ],
               ),
@@ -214,44 +190,23 @@ class _ChatScreenState extends State<ChatScreen> {
       itemBuilder: (context, index) {
         final item = _messages[index];
 
-        final isUser =
-            item['sender'] == 'user';
+        final isUser = item['sender'] == 'user';
 
         return Align(
-          alignment: isUser
-              ? Alignment.centerRight
-              : Alignment.centerLeft,
+          alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
           child: Container(
             constraints: BoxConstraints(
-              maxWidth:
-                  MediaQuery.of(context).size.width *
-                      0.82,
+              maxWidth: MediaQuery.of(context).size.width * 0.82,
             ),
-            margin:
-                const EdgeInsets.only(bottom: 14),
-            padding:
-                const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 13,
-            ),
+            margin: const EdgeInsets.only(bottom: 14),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
             decoration: BoxDecoration(
-              color: isUser
-                  ? const Color(0xFFD5EEE8)
-                  : Colors.white,
-              borderRadius:
-                  BorderRadius.only(
-                topLeft:
-                    const Radius.circular(18),
-                topRight:
-                    const Radius.circular(18),
-                bottomLeft:
-                    Radius.circular(
-                  isUser ? 18 : 4,
-                ),
-                bottomRight:
-                    Radius.circular(
-                  isUser ? 4 : 18,
-                ),
+              color: isUser ? const Color(0xFFD5EEE8) : Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: const Radius.circular(18),
+                topRight: const Radius.circular(18),
+                bottomLeft: Radius.circular(isUser ? 18 : 4),
+                bottomRight: Radius.circular(isUser ? 4 : 18),
               ),
             ),
             child: Text(
@@ -271,70 +226,43 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget _buildInputArea() {
     return SafeArea(
       child: Container(
-        padding: const EdgeInsets.fromLTRB(
-          12,
-          10,
-          12,
-          12,
-        ),
+        padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
         color: Colors.white,
         child: Row(
-          crossAxisAlignment:
-              CrossAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Expanded(
               child: TextField(
-                controller:
-                    _messageController,
+                controller: _messageController,
                 enabled: !_isLoading,
                 minLines: 1,
                 maxLines: 4,
-                textInputAction:
-                    TextInputAction.send,
-                onSubmitted:
-                    (_) => _sendMessage(),
-                decoration:
-                    InputDecoration(
-                  hintText:
-                      'Type your health question...',
-                  hintStyle:
-                      const TextStyle(
-                    fontSize: 17,
-                  ),
+                textInputAction: TextInputAction.send,
+                onSubmitted: (_) => _sendMessage(),
+                decoration: InputDecoration(
+                  hintText: 'Type your health question...',
+                  hintStyle: const TextStyle(fontSize: 17),
                   filled: true,
-                  fillColor:
-                      const Color(0xFFEEF6F1),
-                  border:
-                      OutlineInputBorder(
-                    borderRadius:
-                        BorderRadius.circular(20),
-                    borderSide:
-                        BorderSide.none,
+                  fillColor: const Color(0xFFEEF6F1),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide.none,
                   ),
-                  contentPadding:
-                      const EdgeInsets.symmetric(
+                  contentPadding: const EdgeInsets.symmetric(
                     horizontal: 18,
                     vertical: 14,
                   ),
                 ),
-                style:
-                    const TextStyle(
-                  fontSize: 18,
-                ),
+                style: const TextStyle(fontSize: 18),
               ),
             ),
             const SizedBox(width: 8),
             Material(
-              color:
-                  const Color(0xFF1B7A6E),
-              borderRadius:
-                  BorderRadius.circular(18),
+              color: const Color(0xFF1B7A6E),
+              borderRadius: BorderRadius.circular(18),
               child: InkWell(
-                onTap: _isLoading
-                    ? null
-                    : _sendMessage,
-                borderRadius:
-                    BorderRadius.circular(18),
+                onTap: _isLoading ? null : _sendMessage,
+                borderRadius: BorderRadius.circular(18),
                 child: const SizedBox(
                   width: 56,
                   height: 56,
